@@ -18,9 +18,6 @@ public class MatrixTest {
         setElement
 
         determinant
-
-        equals
-        hashCode
     */
     private static Matrix mat;
 
@@ -116,42 +113,24 @@ public class MatrixTest {
         }
     }
 
-    @Test
-    public void getDeterminantTest(){
-        try {
-            mat.setElement(0,0, 1);
-            mat.setElement(0,1, 2);
-            mat.setElement(0,2, 3);
-            mat.setElement(1,0, 4);
-            mat.setElement(1,1, 5);
-            mat.setElement(1,2, 6);
-            mat.setElement(2,0, 7);
-            mat.setElement(2,1, 8);
-            mat.setElement(2,2, 9);
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
-        double expected = 0;
-        double result = mat.getDeterminant();
-        assertEquals(expected, result, 0.000001);
-    }
+
 
     @Test
-    public void test(){
-        try {
-            mat.setElement(0,0, 1);
-            mat.setElement(0,1, 2);
-            mat.setElement(0,2, 3);
-            mat.setElement(1,0, 4);
-            mat.setElement(1,1, 5);
-            mat.setElement(1,2, 6);
-            mat.setElement(2,0, 7);
-            mat.setElement(2,1, 8);
-            mat.setElement(2,2, 9);
-            mat.getDeterminant();
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
+    public void gaussMethodMatrixHasNotChangedTest(){
+            try {
+                mat.setElement(0,0, 1);
+                mat.setElement(0,1, 2);
+                mat.setElement(0,2, 3);
+                mat.setElement(1,0, 4);
+                mat.setElement(1,1, 5);
+                mat.setElement(1,2, 6);
+                mat.setElement(2,0, 7);
+                mat.setElement(2,1, 8);
+                mat.setElement(2,2, 9);
+                mat.getDeterminant();
+            }catch (Exception e){
+                System.err.println(e.getMessage());
+            }
 
         try {
             System.out.println(mat.getElement(0, 0) + " " +
@@ -167,6 +146,57 @@ public class MatrixTest {
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
+        System.out.println(mat.getDeterminant());
+    }
+
+    @Test
+    public void gaussMethod(){
+        try {
+            mat.setElement(0,0, 1);
+            mat.setElement(0,1, 2);
+            mat.setElement(0,2, 3);
+            mat.setElement(1,0, 4);
+            mat.setElement(1,1, 5);
+            mat.setElement(1,2, 6);
+            mat.setElement(2,0, 7);
+            mat.setElement(2,1, 8);
+            mat.setElement(2,2, 9);
+            mat.getDeterminant();
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+        double[] mat1 = mat.gaussMethod();
+        int k = 0;
+        for(double m: mat1){
+            System.out.print(m);
+            k++;
+            if(k % mat.getSize() == 0){
+                System.out.println();
+            }
+        }
+    }
+
+    @Test
+    public void getDeterminantTest(){
+        try {
+            mat.setElement(0,0, 1);
+            mat.setElement(0,1, 2);
+            mat.setElement(0,2, 3);
+            mat.setElement(1,0, 4);
+            mat.setElement(1,1, 5);
+            mat.setElement(1,2, 6);
+            mat.setElement(2,0, 7);
+            mat.setElement(2,1, 8);
+            mat.setElement(2,2, 9);
+            mat.getDeterminant();
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+
+        double expected = 0;
+        double result = mat.getDeterminant();
+        System.out.println(result);
+        assertEquals(expected, result, 0.000001);
     }
 
 

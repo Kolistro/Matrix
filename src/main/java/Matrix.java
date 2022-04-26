@@ -20,6 +20,15 @@ public class Matrix implements IMatrix{
         }
     }
 
+    public Matrix(double[] matrix, int size){
+        this.size = size;
+        this.matrix = matrix;
+    }
+
+    public int getSize(){
+        return size;
+    }
+
     @Override
     public double getElement(int indexLine, int indexColumn) throws Exception{
         if (indexLine < 0 || indexColumn < 0) throw new IllegalAccessException("Подан отрицательный индекс");
@@ -34,23 +43,86 @@ public class Matrix implements IMatrix{
         matrix[indexLine*size + indexColumn] = element;
     }
 
+    public double[] gaussMethod(){
+        double eps = 0.000001;
+        int i, j, k, l = 0;
+        double r;
+        double[] copyMatrix = Arrays.copyOf(matrix, matrix.length);
+        i = 0; j = 0;
+
+        while (i < size && j < size)
+        {
+            //Инвариант: минор матрицы в столбцах 0..j-1
+            //уже приведен к ступенчатому виду, и строка
+            //с индексом i-1 содержит ненулевой элемент
+            //в стобце с номеромЮ меньшим чем j
+
+            //Ищем максимальный элемент в j-м столбце
+            //начиная с i-й строки
+            r = 0.0;
+            for (k = i; k < size; ++k)
+            {
+                if (Math.abs(copyMatrix[k * size + j]) > r)
+                {
+                    l = k; //Запомним номер строки
+                    r = Math.abs(copyMatrix[k * size + j]); //и максимальный элемент
+                }
+            }
+
+            if (r <= eps)
+            {
+                //Все элементы j-го столбца по абсолютной величине
+                //не првеосходят eps.
+                //Обнулим столбце, начиная с j-й строки
+                for (k = i; k < size; ++k)
+                {
+                    copyMatrix[k * size + j] = 0.0;
+                }
+                ++j; // Увеличим индекс столбца
+                continue; //Переходим к следующей итерации
+            }
+
+            if (l != i)
+            {
+                //Меняем местами i-ю и l-ю строки
+                for (k = j; k < size; ++k)
+                {
+                    r = copyMatrix[i * size + k];
+                    copyMatrix[i * size + k] = copyMatrix[l * size + k];
+                    copyMatrix[l * size + k] = (-r);//Меняем знак строки
+                }
+            }
+
+            //Утверждение: Math.abs(a[i*n + j]) > eps
+            r = copyMatrix[i * size + j];
+            assert(Math.abs(r) > eps);
+
+            //Обнуляем j-й столбец, начиная со строки i+1,
+            //применяя элементарные преобразования 2-го рода
+            for (k = i + 1; k < size; ++k)
+            {
+                double c = (-copyMatrix[k * size + j]) / r;
+                //К k-й строке прибавляем i-ю,
+                //умноженную на c
+                copyMatrix[k * size + j] = 0.0;
+                for (l = j + 1; l < size; ++l)
+                {
+                    copyMatrix[k * size + l] += c * copyMatrix[i * size + l];
+                }
+            }
+
+            ++i; ++j; //Переходим к следующему минору
+        }
+        return copyMatrix;
+    }
+
     @Override
     public double getDeterminant() {
         double determinant = 0;
-        for (int j = 0; j < size; j++){
-            int k = 0;
-            for(int i = 1; i < size; i = i+1+k){
-                matrix[(i+1)*size+j] = matrix[(i+1)*size+j]+(matrix[(i+1)*size+j]/matrix[i*size+j]*(-1)*matrix[i*size+j]);
-
-            }
-            k++;
-            //determinant += matrix[j*size+j];
+        double[] m = gaussMethod();
+        for (int i = 0; i < m.length; i+=size+1){
+            determinant = m[i];
         }
-
-
-        /*for(int i = 0; i < matrix.length; i=i*size+i){
-            determinant += matrix[i];
-        }*/
         return determinant;
     }
 
