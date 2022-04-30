@@ -37,7 +37,7 @@ public class UpTriangleMatrix extends Matrix{
         for(int i = 1; i < indexDiag.length; i++){
             for (int j=1; j<=i; j++){
                 if((indexLine * indexDiag.length + indexColumn) == indexDiag[i]-j){
-                    throw new IllegalArgumentException("Нельзя изменить элемент ниже диагонали");
+                    return 0;
                 }
             }
         }

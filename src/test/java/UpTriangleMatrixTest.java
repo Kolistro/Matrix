@@ -91,24 +91,17 @@ public class UpTriangleMatrixTest {
     }
 
     @Test
-    public void getElementExceptionBelowTheDiagonalTest(){
+    public void getElementBelowTheDiagonalTest(){
+        double result = 45;
         try {
-            upTriangleMatrix.getElement(1, 0);
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
+            result = upTriangleMatrix.getElement(1, 0);
 
-        try {
-            upTriangleMatrix.getElement(2, 0);
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
+        double expected = 0;
+        assertEquals(expected, result, 0.00001);
 
-        try {
-            upTriangleMatrix.getElement(2, 1);
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-        }
     }
 
     @Test
