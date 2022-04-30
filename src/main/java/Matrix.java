@@ -9,12 +9,12 @@ import java.util.Objects;
 */
 public class Matrix implements IMatrix{
     private int size;
-    private double[] matrix;
-    private double determinant;
-    private boolean flag;
+    protected double[] matrix;
+    protected double determinant;
+    protected boolean flag;
 
     public Matrix(int size) throws IllegalArgumentException{
-        if (size <= 0) throw new IllegalArgumentException("Отрицательный размер матрицы");
+        if (size <= 0) throw new IllegalArgumentException("Размер матрицы отрицательный или равен нулю");
         this.size=size;
         matrix = new double[size*size];
         for (int i = 0; i < matrix.length; i++){
@@ -118,9 +118,10 @@ public class Matrix implements IMatrix{
     @Override
     public double getDeterminant() {
         if(flag == false){
+            determinant = 1;
             double[] m = gaussMethod();
             for (int i = 0; i < m.length; i+=size+1){
-                determinant = m[i];
+                determinant *= m[i];
             }
         }
         return determinant;

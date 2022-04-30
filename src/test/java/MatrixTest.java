@@ -74,13 +74,13 @@ public class MatrixTest {
     @Test
     public void getElementIllegalAccessExceptionTest(){
         try {
-            mat.setElement(-1, 0, 2);
+            mat.getElement(-1, 0);
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
 
         try {
-            mat.setElement(2, -5, 2.3);
+            mat.getElement(2, -5);
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
@@ -89,13 +89,13 @@ public class MatrixTest {
     @Test
     public void getElementIndexOutOfBoundsExceptionTest(){
         try {
-            mat.setElement(3, 2, 3);
+            mat.getElement(3, 2);
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
 
         try {
-            mat.setElement(2, 6, 2.3);
+            mat.getElement(2, 6);
         }catch (Exception e){
             System.err.println(e.getMessage());
         }
