@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 public class UpTriangleMatrixTest {
     private  static UpTriangleMatrix upTriangleMatrix;
+
     @Test
     public void constructorExceptionTest(){
         try{

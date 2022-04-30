@@ -9,7 +9,7 @@ public class UpTriangleMatrix extends Matrix{
 
         indexDiag=new int[size];
         int index = 0;
-        for (int i=0; i<indexDiag.length; i++){
+        for (int i=0; i<size; i++){
             indexDiag[i] = index;
             index+=size+1;
         }
@@ -29,7 +29,6 @@ public class UpTriangleMatrix extends Matrix{
             }
         }
         super.setElement(indexLine, indexColumn, element);
-        flag = false;
     }
 
     @Override
