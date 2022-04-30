@@ -10,6 +10,8 @@ import java.util.Objects;
 public class Matrix implements IMatrix{
     private int size;
     private double[] matrix;
+    private double determinant;
+    private boolean flag;
 
     public Matrix(int size) throws IllegalArgumentException{
         if (size <= 0) throw new IllegalArgumentException("Отрицательный размер матрицы");
@@ -18,11 +20,7 @@ public class Matrix implements IMatrix{
         for (int i = 0; i < matrix.length; i++){
             matrix[i] = 0;
         }
-    }
-
-    public Matrix(double[] matrix, int size){
-        this.size = size;
-        this.matrix = matrix;
+        this.flag = false;
     }
 
     public int getSize(){
@@ -41,6 +39,7 @@ public class Matrix implements IMatrix{
         if (indexLine < 0 || indexColumn < 0) throw new IllegalAccessException("Подан отрицательный индекс");
         if (indexLine > size || indexColumn > size) throw new IndexOutOfBoundsException("Выход за пределы массива");
         matrix[indexLine*size + indexColumn] = element;
+        flag = false;
     }
 
     public double[] gaussMethod(){
@@ -118,10 +117,11 @@ public class Matrix implements IMatrix{
 
     @Override
     public double getDeterminant() {
-        double determinant = 0;
-        double[] m = gaussMethod();
-        for (int i = 0; i < m.length; i+=size+1){
-            determinant = m[i];
+        if(flag == false){
+            double[] m = gaussMethod();
+            for (int i = 0; i < m.length; i+=size+1){
+                determinant = m[i];
+            }
         }
         return determinant;
     }
@@ -131,12 +131,12 @@ public class Matrix implements IMatrix{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Matrix matrix1 = (Matrix) o;
-        return size == matrix1.size && Arrays.equals(matrix, matrix1.matrix);
+        return size == matrix1.size && Double.compare(matrix1.determinant, determinant) == 0 && flag == matrix1.flag && Arrays.equals(matrix, matrix1.matrix);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(size);
+        int result = Objects.hash(size, determinant, flag);
         result = 31 * result + Arrays.hashCode(matrix);
         return result;
     }
